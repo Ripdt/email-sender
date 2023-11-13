@@ -8,13 +8,14 @@ jsonFile = "settings.json"
 
 def changeSettings():
     option = ''
-    emailJSON = readSettings()
+    account = readSettings()
     while (option != 'c'):
-        printMenu(emailJSON)
-        option = input('opção: ')
-        processOption(option, emailJSON)
+        os.system("cls")
+        printMenu(account)
+        option = input("opção: ")
+        processOption(option, account)
 
-    json_object = json.dumps(emailJSON, indent=4)
+    json_object = json.dumps(account, indent=4)
 
     with open("settings.json", "w") as outfile:
         outfile.write(json_object)
@@ -26,39 +27,44 @@ def readSettings():
     return {
         "email": "",
         "senha": "",
-        "app-password": "gbsr xapy yeoq vsou"
+        "app-password": "gbsr xapy yeoq vsou",
+        "server": "smtp.gmail.com",
+        "porta": 465
     }
         
-def printMenu(emailJSON):
-    print('CONFIGURAÇÕES')
-    print('')
-    printEmailInformation(emailJSON)
+def printMenu(account):
+    print('CONFIGURAÇÕES\n')
+    printEmailInformation(account)
     printOptionsFromMenu()
 
-def printEmailInformation(emailJSON):
+def printEmailInformation(account):
     print('ESTES SÃO SEUS DADOS:')
-    print("email........." + emailJSON["email"])
-    print("senha........." + emailJSON["senha"])
-    print("app-password.." + emailJSON["app-password"])
+    print("email........." + account["email"])
+    print("senha........." + account["senha"])
+    print("app-password.." + account["app-password"])
+    print("server........" + account["server"])
+    print("porta........." + str(account["porta"]))
 
 def printOptionsFromMenu():
-    print('')
-    print('QUAL DESEJA ALTERAR?')
-    print('')
-    print('insira "e" para "email"')
-    print('insira "s" para "senha"')
-    print('insira "a" para "app-password"')
-    print('')
-    print('insira "c" para cancelar configuração')
-    print('')
+    print("\nQUAL DESEJA ALTERAR?\n")
+    print("insira 'e' para 'email'")
+    print("insira 's' para 'senha'")
+    print("insira 'a' para 'app-password'")
+    print("insira 'S' para 'server'")
+    print("insira 'p' para 'porta'")
+    print("\ninsira 'c' para cancelar configuração\n")
 
-def processOption(option, emailJSON):
+def processOption(option, account):
     if (option == 'e'):
-        emailJSON['email'] = input('email: ')
+        account['email'] = input('email: ')
     elif (option == 's'):
-        emailJSON["password"] = input('senha: ')
+        account["senha"] = input('senha: ')
     elif (option == 'a'):
-        emailJSON["app-password"] = input('app-password')
+        account["app-password"] = input('app-password')
+    elif (option == 'S'):
+        account["server"] = input('server: ')
+    elif (option == 'p'):
+        account["porta"] = input('porta: ')
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     globals()[sys.argv[1]]()

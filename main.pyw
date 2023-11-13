@@ -1,6 +1,5 @@
 from pystray import Menu, MenuItem, Icon
 from PIL import Image
-# from email import message
 
 import os
 import settings
@@ -8,8 +7,8 @@ import settings
 img = Image.open("icons/gmail.png")
 emailInformation = settings.readSettings()
 
-def onClicked(icon, item):
-    print('hello world')
+def onSendClicked(icon, item):
+    os.system("start /wait cmd /c send.py sendEmail " + emailInformation.__str__())
 
 def onExitClicked(icon, item):
     icon.stop()
@@ -19,7 +18,7 @@ def onSettingsClicked(icon, item):
     emailInformation = settings.readSettings()
 
 icon = Icon("ripdt-email-sender", img, menu=Menu(
-    MenuItem("teste", onClicked),
+    MenuItem("enviar e-mail", onSendClicked),
     MenuItem("configurações", onSettingsClicked),
     MenuItem("sair", onExitClicked)
 ))
